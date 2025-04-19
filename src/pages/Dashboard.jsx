@@ -26,22 +26,19 @@ const Dashboard = () => {
       title: "📊 Reports",
       image: "/images/reports.jpg",
       action: () => navigate("/reports"),
-    },
-    {
-      title: "🚪 Logout",
-      image: "/images/logout.jpg",
-      action: () => {
-        localStorage.removeItem("token");
-        navigate("/login");
-      },
-    },
+    }
   ];
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
-    <div className="page-container" style={{ textAlign: "center" }}>
+    <div className="page-container" style={{ textAlign: "center", position: "relative" }}>
       <h2>✨ Welcome to the Restaurant Dashboard ✨</h2>
       <p style={{ marginBottom: "2rem" }}>
-        Manage everything with ease and efficiency 
+        Manage everything with ease and efficiency
       </p>
 
       <div className="card-container">
@@ -52,6 +49,10 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
+
+      <button className="logout-button" onClick={handleLogout}>
+        Logout
+      </button>
     </div>
   );
 };
