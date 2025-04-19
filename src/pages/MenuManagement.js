@@ -1,6 +1,8 @@
 // src/pages/MenuManagement.js
 import React, { useState, useEffect } from "react";
-import "../styles/common.css"; // 👈 Import your shared styles
+import "../styles/common.css";
+import "./MenuManagement.css"; // 👈 New CSS import
+import FoodCarousel from "../components/FoodCarousel";
 import { useNavigate } from "react-router-dom";
 
 function MenuManagement() {
@@ -9,7 +11,6 @@ function MenuManagement() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Simulated fetch from mock "server"
   const fetchMenuItems = () => {
     setLoading(true);
     setTimeout(() => {
@@ -46,12 +47,12 @@ function MenuManagement() {
   };
 
   return (
-    <div className="page-container">
-      <h2>🍽️ Menu Management</h2>
-      <button onClick={() => navigate("/dashboard")}>← Back to Dashboard</button>
-      <br /><br />
+    <div className="page-container menu-page">
+      <FoodCarousel />
+      <h2 className="menu-header">🍽️ Menu Management</h2>
+      <button className="back-btn" onClick={() => navigate("/dashboard")}>← Back to Dashboard</button>
 
-      <form onSubmit={handleAddItem}>
+      <form className="menu-form" onSubmit={handleAddItem}>
         <h3>Add New Item</h3>
 
         <label>Item Name:</label>
@@ -82,39 +83,40 @@ function MenuManagement() {
           required
         />
 
-        <button type="submit">➕ Add Item</button>
+        <button type="submit" className="add-btn">➕ Add Item</button>
       </form>
 
-      <br />
-      <h3>📋 Menu Items</h3>
+      <h3 className="menu-subheader">📋 Menu Items</h3>
 
       {loading ? (
-        <p>Loading menu...</p>
+        <p className="loading-text">Loading menu...</p>
       ) : menuItems.length === 0 ? (
-        <p>No items in menu yet.</p>
+        <p className="loading-text">No items in menu yet.</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Price (₹)</th>
-              <th>Description</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {menuItems.map(item => (
-              <tr key={item.id}>
-                <td>{item.name}</td>
-                <td>{item.price}</td>
-                <td>{item.description}</td>
-                <td>
-                  <button onClick={() => handleDeleteItem(item.id)}>🗑️ Delete</button>
-                </td>
+        <div className="table-wrapper">
+          <table className="menu-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Price (₹)</th>
+                <th>Description</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {menuItems.map(item => (
+                <tr key={item.id}>
+                  <td>{item.name}</td>
+                  <td>{item.price}</td>
+                  <td>{item.description}</td>
+                  <td>
+                    <button className="delete-btn" onClick={() => handleDeleteItem(item.id)}>🗑️ Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
