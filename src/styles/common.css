@@ -1,51 +1,61 @@
 /* src/styles/common.css */
 
 .page-container {
-    padding: 2rem;
-    font-family: 'Segoe UI', sans-serif;
-  }
-  
-  h2 {
-    color: #333;
-    margin-bottom: 1.5rem;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-  }
-  
-  table th, table td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  
-  table thead {
-    background-color: #f0f0f0;
-  }
-  
-  button {
-    padding: 8px 16px;
-    background-color: #0066cc;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #004e99;
-  }
-  
-  input, select, textarea {
-    padding: 8px;
-    margin-top: 4px;
-    margin-bottom: 12px;
-    width: 100%;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
+  padding: 2rem;
+  font-family: 'Playfair Display', serif;
+  background-color: #fffaf3; /* soft ivory backdrop */
+  color: #4e342e; /* deep brown for text */
+}
+
+h2 {
+  color: #6d4c41; /* chocolate brown */
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #fff8e1; /* light golden */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+table th, table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #d7ccc8; /* soft beige border */
+}
+
+table thead {
+  background-color: #ffe0b2; /* pastel gold */
+  color: #4e342e;
+}
+
+button {
+  padding: 8px 16px;
+  background-color: #a1887f; /* soft brown */
+  color: #fff8e1; /* pale golden text */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #8d6e63; /* darker brown */
+}
+
+input, select, textarea {
+  padding: 10px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #bcaaa4; /* muted beige border */
+  border-radius: 6px;
+  background-color: #fffaf3;
+  font-family: 'Playfair Display', serif;
+  color: #4e342e;
+}
