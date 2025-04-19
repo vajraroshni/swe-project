@@ -1,24 +1,128 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import MenuManagement from "./pages/MenuManagement";
+import AddMenuItem from "./pages/AddMenuItem";
+import EditMenuItem from "./pages/EditMenuItem"; 
+import InventoryManagement from "./pages/InventoryManagement"; 
+import GeneratePO from "./pages/GeneratePO";
+import PurchaseOrders from "./pages/PurchaseOrders";
+import Reports from "./pages/Reports";
+import OrderEntry from "./pages/OrderEntry"; 
+import GenerateBill from "./pages/GenerateBill"; 
+import ChefInventory from "./pages/ChefInventory";
+import SupplyRequest from "./pages/SupplyRequest";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/menu"
+          element={
+            <ProtectedRoute>
+              <MenuManagement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/add-menu-item"
+          element={
+            <ProtectedRoute>
+              <AddMenuItem />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit-menu-item/:id"
+          element={
+            <ProtectedRoute>
+              <EditMenuItem />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+  path="/inventory"
+  element={
+    <ProtectedRoute>
+      <InventoryManagement />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/generate-po"
+  element={
+    <ProtectedRoute>
+      <GeneratePO />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/purchase-orders"
+  element={
+    <ProtectedRoute>
+      <PurchaseOrders />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/reports"
+  element={
+    <ProtectedRoute>
+      <Reports />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/order-entry"
+  element={
+    <ProtectedRoute>
+      <OrderEntry />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/generate-bill"
+  element={
+    <ProtectedRoute>
+      <GenerateBill />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/chef-inventory"
+  element={
+    <ProtectedRoute>
+      <ChefInventory />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/supply-request"
+  element={
+    <ProtectedRoute>
+      <SupplyRequest />
+    </ProtectedRoute>
+  }
+/>
+
+
+        {/* Redirect to login by default */}
+        <Route path="*" element={<Login />} />
+      </Routes>
+    </Router>
   );
 }
 
