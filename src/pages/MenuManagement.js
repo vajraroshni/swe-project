@@ -4,6 +4,7 @@ import "../styles/common.css";
 import "./MenuManagement.css"; // 👈 New CSS import
 import FoodCarousel from "../components/FoodCarousel";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function MenuManagement() {
   const [menuItems, setMenuItems] = useState([]);
@@ -35,11 +36,15 @@ function MenuManagement() {
     };
     setMenuItems([...menuItems, newItemWithId]);
     setNewItem({ name: "", price: "", description: "" });
+
+    toast.success("Item added successfully! ✅");
   };
 
   const handleDeleteItem = (id) => {
     const updatedItems = menuItems.filter(item => item.id !== id);
     setMenuItems(updatedItems);
+
+    toast.info("Item deleted 🗑️");
   };
 
   const handleChange = (e) => {
