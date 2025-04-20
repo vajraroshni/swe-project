@@ -1,0 +1,107 @@
+.order-entry {
+    background-color: #fffaf3;
+    font-family: 'Playfair Display', serif;
+    color: #4e342e;
+  }
+  
+  .order-header {
+    color: #6d4c41;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .order-grid {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .menu-panel,
+  .cart-panel {
+    flex: 1 1 45%;
+    background-color: #fff8e1;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #d7ccc8;
+  }
+  
+  thead {
+    background-color: #ffe0b2;
+    color: #4e342e;
+  }
+  
+  .qty-input {
+    width: 60px;
+    padding: 6px;
+    border: 1px solid #bcaaa4;
+    border-radius: 4px;
+  }
+  
+  .add-btn,
+  .remove-btn,
+  .place-order-btn {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .add-btn {
+    background-color: #a1887f;
+    color: #fff8e1;
+  }
+  
+  .add-btn:hover {
+    background-color: #8d6e63;
+  }
+  
+  .remove-btn {
+    background-color: #ef5350;
+    color: white;
+  }
+  
+  .remove-btn:hover {
+    background-color: #d32f2f;
+  }
+  
+  .place-order-btn {
+    margin-top: 1rem;
+    background-color: #6d4c41;
+    color: #fff8e1;
+    width: 100%;
+  }
+  
+  .place-order-btn:hover {
+    background-color: #5d4037;
+  }
+  
+  .empty-cart {
+    font-style: italic;
+    color: #888;
+  }
+
+  .footer-image {
+    width: 100%;
+    margin-top: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  

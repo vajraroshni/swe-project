@@ -1,7 +1,9 @@
 // src/pages/Reports.js
 import React, { useState } from "react";
 import "../styles/common.css";
+import "./Reports.css";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Reports() {
   const [reportType, setReportType] = useState("sales");
@@ -10,6 +12,8 @@ function Reports() {
   const navigate = useNavigate();
 
   const generateReport = () => {
+    toast.info(`Generating ${reportType} report...`);
+
     // Simulated report data
     const mockData = {
       sales: [
@@ -27,49 +31,53 @@ function Reports() {
       }
     };
 
-    setReportData(mockData[reportType]);
+    setTimeout(() => {
+      setReportData(mockData[reportType]);
+      toast.success("Report generated ✅");
+    }, 800);
   };
 
   return (
-    <div className="page-container">
-      <h2>📊 Reports</h2>
-      <button onClick={() => navigate("/dashboard")}>← Back to Dashboard</button>
-      <br /><br />
+    <div className="page-container reports-page">
+      <h2 className="report-header">📊 Reports</h2>
+      <button className="back-btn" onClick={() => navigate("/dashboard")}>
+        ← Back to Dashboard
+      </button>
 
-      <div style={{ marginBottom: "1rem" }}>
-        <label>Report Type:&nbsp;</label>
+      <div className="report-controls">
+        <label>Report Type:</label>
         <select value={reportType} onChange={(e) => setReportType(e.target.value)}>
           <option value="sales">Sales Report</option>
           <option value="inventory">Inventory Report</option>
           <option value="financial">Financial Report</option>
         </select>
-      </div>
 
-      <div style={{ marginBottom: "1rem" }}>
-        <label>From:&nbsp;</label>
+        <label>From:</label>
         <input
           type="date"
           value={dateRange.from}
           onChange={(e) => setDateRange({ ...dateRange, from: e.target.value })}
         />
-        &nbsp;&nbsp;
-        <label>To:&nbsp;</label>
+        <label>To:</label>
         <input
           type="date"
           value={dateRange.to}
           onChange={(e) => setDateRange({ ...dateRange, to: e.target.value })}
         />
+
+        <button className="generate-btn" onClick={generateReport}>
+          📥 Generate Report
+        </button>
       </div>
 
-      <button onClick={generateReport}>📥 Generate Report</button>
-
-      <br /><br />
       {reportData && (
-        <div style={{ marginTop: "2rem" }}>
-          <h3>📄 {reportType.charAt(0).toUpperCase() + reportType.slice(1)} Report</h3>
+        <div className="report-table-wrapper">
+          <h3 className="report-subheader">
+            📄 {reportType.charAt(0).toUpperCase() + reportType.slice(1)} Report
+          </h3>
 
           {reportType === "sales" && (
-            <table>
+            <table className="report-table">
               <thead>
                 <tr>
                   <th>Item</th>
@@ -90,7 +98,7 @@ function Reports() {
           )}
 
           {reportType === "inventory" && (
-            <table>
+            <table className="report-table">
               <thead>
                 <tr>
                   <th>Ingredient</th>
@@ -111,7 +119,7 @@ function Reports() {
           )}
 
           {reportType === "financial" && (
-            <table>
+            <table className="report-table">
               <tbody>
                 <tr>
                   <td><strong>Total Revenue</strong></td>
@@ -130,6 +138,13 @@ function Reports() {
           )}
         </div>
       )}
+
+      {/* Decorative Footer Image */}
+      <img
+        src="/images/ingredients photo.jpg"
+        alt="Footer Decoration"
+        className="footer-image"
+      />
     </div>
   );
 }

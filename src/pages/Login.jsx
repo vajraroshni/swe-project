@@ -1,6 +1,10 @@
 // src/pages/Login.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { motion } from "framer-motion"; // ✨ animation lib
+import "../styles/common.css";
+import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -12,39 +16,71 @@ function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Hardcoded user validation (fake login)
+
     if (credentials.username === "admin" && credentials.password === "1234") {
       localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("token", "mock-token");
+      toast.success("Login successful ✅");
       navigate("/dashboard");
     } else {
-      alert("Invalid credentials 😢");
+      toast.error("Invalid credentials 😢");
     }
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={credentials.username}
-          onChange={handleChange}
-          required
-        />
-        <br /><br />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={credentials.password}
-          onChange={handleChange}
-          required
-        />
-        <br /><br />
-        <button type="submit">Login</button>
-      </form>
+    <div className="login-page">
+      {/* Motion login container */}
+      <motion.div
+        className="login-container"
+        initial={{ opacity: 0, y: 60 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <h2>🍽️ Welcome</h2>
+        <p>Login below</p>
+
+        <form onSubmit={handleLogin}>
+          <label>Username:</label>
+          <input
+            type="text"
+            name="username"
+            placeholder="Enter username"
+            value={credentials.username}
+            onChange={handleChange}
+            required
+          />
+
+          <label>Password:</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter password"
+            value={credentials.password}
+            onChange={handleChange}
+            required
+          />
+
+          {/* Animated Login button */}
+          <motion.button
+            type="submit"
+            className="login-btn"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Login
+          </motion.button>
+        </form>
+      </motion.div>
+
+      {/* Background image with fade in */}
+      <motion.img
+        src="/images/login-bg.jpg"
+        alt="Food Background"
+        className="login-bg"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 1.2 }}
+      />
     </div>
   );
 }
