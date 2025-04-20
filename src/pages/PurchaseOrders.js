@@ -1,6 +1,7 @@
-// src/pages/PurchaseOrders.js
+// src/pages/PurchaseOrders.js 
 import React, { useEffect, useState } from "react";
 import "../styles/common.css";
+import "./PurchaseOrders.css"; // 🌟 Custom styling for this screen
 import { useNavigate } from "react-router-dom";
 
 function PurchaseOrders() {
@@ -9,7 +10,6 @@ function PurchaseOrders() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Simulate fetch
     setTimeout(() => {
       setOrders([
         {
@@ -40,45 +40,75 @@ function PurchaseOrders() {
   };
 
   return (
-    <div className="page-container">
-      <h2>📦 Purchase Orders</h2>
-      <button onClick={() => navigate("/dashboard")}>← Back to Dashboard</button>
-      <br /><br />
+    <div className="page-container po-page">
+      <h2 className="po-header">📦 Purchase Orders</h2>
+      <button className="back-btn" onClick={() => navigate("/dashboard")}>
+        ← Back to Dashboard
+      </button>
 
       {loading ? (
-        <p>Loading purchase orders...</p>
+        <p className="loading-text">Loading purchase orders...</p>
       ) : orders.length === 0 ? (
-        <p>No purchase orders available.</p>
+        <p className="loading-text">No purchase orders available.</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Ingredient</th>
-              <th>Quantity</th>
-              <th>Supplier</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((po) => (
-              <tr key={po.id}>
-                <td>{po.ingredient}</td>
-                <td>{po.quantity}</td>
-                <td>{po.supplier}</td>
-                <td>{po.status}</td>
-                <td>
-                  {po.status === "Pending" ? (
-                    <button onClick={() => handleApprove(po.id)}>✅ Approve</button>
-                  ) : (
-                    <span style={{ color: "green" }}>Approved</span>
-                  )}
-                </td>
+        <div className="table-wrapper">
+          <table className="po-table">
+            <thead>
+              <tr>
+                <th>Ingredient</th>
+                <th>Quantity</th>
+                <th>Supplier</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {orders.map((po) => (
+                <tr key={po.id}>
+                  <td>{po.ingredient}</td>
+                  <td>{po.quantity}</td>
+                  <td>{po.supplier}</td>
+                  <td>
+                    <span
+                      className={`status-badge ${
+                        po.status === "Approved" ? "approved" : "pending"
+                      }`}
+                    >
+                      {po.status}
+                    </span>
+                  </td>
+                  <td>
+                    {po.status === "Pending" ? (
+                      <button
+                        className="approve-btn"
+                        onClick={() => handleApprove(po.id)}
+                      >
+                        ✅ Approve
+                      </button>
+                    ) : (
+                      <span style={{ color: "green", fontWeight: "bold" }}>
+                        ✔️
+                      </span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
+
+      {/* 🌅 Decorative bottom border image inside a wrapper */}
+      <div className="footer-wrapper">
+        <img
+          src="/images/ingredients photo.jpg"
+          alt="Decorative Footer"
+          className="footer-image"
+        />
+        {/* Optional golden overlay
+        <div className="gold-overlay"></div>
+        */}
+      </div>
     </div>
   );
 }

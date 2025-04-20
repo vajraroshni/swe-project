@@ -26,6 +26,21 @@ const Dashboard = () => {
       title: "📊 Reports",
       image: "/images/reports.jpg",
       action: () => navigate("/reports"),
+    },
+    {
+      title: "📝 Enter New Order",
+      image: "/images/new-order.jpg",  // Make sure to add a relevant image for this
+      action: () => navigate("/order-entry"),
+    },
+    {
+      title: "🍳 Chef Inventory",
+      image: "/images/chef-inventory.jpg",  // Add a relevant image for this
+      action: () => navigate("/chef-inventory"),
+    },
+    {
+      title: "📦 Supply Request",
+      image: "/images/supply-request.jpg",  // Relevant image here
+      action: () => navigate("/supply-request"),
     }
   ];
 
