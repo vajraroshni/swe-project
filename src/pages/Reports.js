@@ -141,7 +141,7 @@ function Reports() {
 
       {/* Decorative Footer Image */}
       <img
-        src="/images/ingredients photo.jpg"
+        src="/images/reports-generation.png"
         alt="Footer Decoration"
         className="footer-image"
       />

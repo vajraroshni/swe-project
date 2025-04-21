@@ -1,12 +1,13 @@
 // src/pages/SupplyRequest.js
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/common.css";
+import "./SupplyRequest.css";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function SupplyRequest() {
   const [ingredients, setIngredients] = useState([]);
   const [requests, setRequests] = useState({});
-  const [submitted, setSubmitted] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,71 +15,87 @@ function SupplyRequest() {
       setIngredients([
         { id: 1, name: "Tomatoes", unit: "kg" },
         { id: 2, name: "Paneer", unit: "kg" },
-        { id: 3, name: "Oil", unit: "litres" }
+        { id: 3, name: "Flour", unit: "kg" },
+        { id: 4, name: "Cheese", unit: "kg" }
       ]);
     }, 300);
   }, []);
 
-  const handleChange = (id, qty) => {
-    setRequests({ ...requests, [id]: qty });
+  const handleRequestChange = (id, qty) => {
+    setRequests(prev => ({
+      ...prev,
+      [id]: qty
+    }));
   };
 
-  const handleSubmit = () => {
-    const finalRequest = ingredients
-      .filter(i => requests[i.id] && requests[i.id] > 0)
-      .map(i => ({
-        id: i.id,
-        name: i.name,
-        quantity: requests[i.id],
-        unit: i.unit
-      }));
+  const handleSendRequests = () => {
+    const requestList = Object.entries(requests)
+      .filter(([_, qty]) => qty > 0)
+      .map(([id, qty]) => {
+        const ing = ingredients.find(i => i.id === parseInt(id));
+        return { ...ing, quantity: qty };
+      });
 
-    console.log("📦 Supply Requested:", finalRequest);
-    setSubmitted(true);
+    if (requestList.length === 0) {
+      toast.error("No quantity specified!");
+      return;
+    }
+
+    console.log("Requested Supplies:", requestList);
+    toast.success("Request sent successfully ✅");
     setRequests({});
   };
 
   return (
-    <div className="page-container">
-      <h2>📥 Supply Request</h2>
-      <button onClick={() => navigate("/dashboard")}>← Back to Dashboard</button>
-      <br /><br />
+    <div className="page-container supply-page">
+      <h2 className="supply-header">🍳 Supply Request</h2>
+      <button className="back-btn" onClick={() => navigate("/dashboard")}>
+        ← Back to Dashboard
+      </button>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Ingredient</th>
-            <th>Unit</th>
-            <th>Request Quantity</th>
-          </tr>
-        </thead>
-        <tbody>
-          {ingredients.map(i => (
-            <tr key={i.id}>
-              <td>{i.name}</td>
-              <td>{i.unit}</td>
-              <td>
-                <input
-                  type="number"
-                  min="0"
-                  placeholder="Enter quantity"
-                  value={requests[i.id] || ""}
-                  onChange={(e) => handleChange(i.id, e.target.value)}
-                />
-              </td>
+      <p className="supply-subtext">
+        Select ingredients and specify the quantity you need.
+      </p>
+
+      <div className="table-wrapper">
+        <table className="supply-table">
+          <thead>
+            <tr>
+              <th>Ingredient</th>
+              <th>Unit</th>
+              <th>Quantity Needed</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {ingredients.map((ing) => (
+              <tr key={ing.id}>
+                <td>{ing.name}</td>
+                <td>{ing.unit}</td>
+                <td>
+                  <input
+                    type="number"
+                    min="0"
+                    placeholder="e.g. 2"
+                    value={requests[ing.id] || ""}
+                    onChange={(e) => handleRequestChange(ing.id, e.target.value)}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       <br />
-      <button onClick={handleSubmit}>📤 Submit Request</button>
+      <button className="submit-request-btn" onClick={handleSendRequests}>
+        📦 Send Request
+      </button>
 
-      {submitted && (
-        <p style={{ color: "green", marginTop: "1rem" }}>
-          ✅ Supply request sent to Manager!
-        </p>
-      )}
+      {/* ✨ Creative Footer with a food quote and styling */}
+      <div className="thank-you-banner">
+  <p>Thank you for keeping the kitchen running smoothly! 🍳✨</p>
+</div>
+
     </div>
   );
 }
