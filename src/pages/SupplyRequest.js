@@ -93,8 +93,14 @@ function SupplyRequest() {
 
       {/* ✨ Creative Footer with a food quote and styling */}
       <div className="thank-you-banner">
+  <img
+    src="/images/chef-hat.png"
+    alt="Chef Hat"
+    className="thank-you-icon"
+  />
   <p>Thank you for keeping the kitchen running smoothly! 🍳✨</p>
 </div>
+
 
     </div>
   );
