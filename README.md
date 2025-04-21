@@ -1,5 +1,5 @@
 Frontend Features: 
-Login Page: Role-Based left since backend not complte
+Login Page: Role-Based left since backend not complete
 Role-Based Dashboard
 Menu Management: Add, view, and delete menu items
 Inventory Management: Track and update stock levels
