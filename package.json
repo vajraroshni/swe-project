@@ -1,4 +1,27 @@
 {
+<<<<<<< HEAD
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.14.0",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+=======
   "name": "my-reset-app",
   "version": "0.1.0",
   "private": true,
@@ -38,5 +61,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+>>>>>>> 3226b1abfaa08e90da5df7d12c3fe82c6104e4f5
   }
 }
