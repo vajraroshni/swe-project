@@ -5,7 +5,7 @@ const {
   getInventoryById,
   updateStock,
   checkInventoryLevels
-} = require('../controllers/inventoryController');
+} = require('../controllers/inventorycontroller');
 
 router.get('/', getAllInventory);
 router.get('/:id', getInventoryById);

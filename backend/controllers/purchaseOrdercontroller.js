@@ -201,6 +201,7 @@ exports.updatePurchaseOrderStatus = async (req, res) => {
 
 // Helper function to handle received purchase orders
 async function handleReceivedPurchaseOrder(purchaseOrderId) {
+<<<<<<< HEAD
   const transaction = await sequelize.transaction();
   
   try {
@@ -211,6 +212,11 @@ async function handleReceivedPurchaseOrder(purchaseOrderId) {
       ],
       transaction
     });
+=======
+  try {
+    // Fetch the purchase order details
+    const purchaseOrder = await db.collection('purchaseOrders').findOne({ _id: ObjectId(purchaseOrderId) });
+>>>>>>> b2a0ea14144fee369fc3c63e1b88dc36d4afc4e1
     
     if (!purchaseOrder) {
       throw new Error(`Purchase order with ID ${purchaseOrderId} not found`);
@@ -221,6 +227,7 @@ async function handleReceivedPurchaseOrder(purchaseOrderId) {
     }
     
     // Update inventory for each item in the purchase order
+<<<<<<< HEAD
     for (const item of purchaseOrder.PurchaseOrderItems) {
       // Get current inventory record
       const inventoryItem = await Inventory.findOne({
@@ -256,6 +263,75 @@ async function handleReceivedPurchaseOrder(purchaseOrderId) {
     return purchaseOrder;
   } catch (error) {
     await transaction.rollback();
+=======
+    const inventoryUpdates = [];
+    for (const item of purchaseOrder.items) {
+      // Get current inventory record
+      const inventoryItem = await db.collection('inventory').findOne({ itemId: item.itemId });
+      
+      if (!inventoryItem) {
+        // Create new inventory record if it doesn't exist
+        inventoryUpdates.push({
+          insertOne: {
+            document: {
+              itemId: item.itemId,
+              name: item.name,
+              quantity: item.quantity,
+              unit: item.unit,
+              category: item.category || 'uncategorized',
+              lastUpdated: new Date()
+            }
+          }
+        });
+      } else {
+        // Update existing inventory record
+        inventoryUpdates.push({
+          updateOne: {
+            filter: { itemId: item.itemId },
+            update: { 
+              $inc: { quantity: item.quantity },
+              $set: { lastUpdated: new Date() }
+            }
+          }
+        });
+      }
+    }
+
+    // Execute all inventory updates in a bulk operation
+    if (inventoryUpdates.length > 0) {
+      await db.collection('inventory').bulkWrite(inventoryUpdates);
+    }
+    
+    // Update purchase order status
+    await db.collection('purchaseOrders').updateOne(
+      { _id: ObjectId(purchaseOrderId) },
+      { 
+        $set: { 
+          status: 'received',
+          receivedDate: new Date(),
+          receivedBy: currentUser.id
+        }
+      }
+    );
+    
+    // Add to transaction log
+    await db.collection('transactionLog').insertOne({
+      type: 'PURCHASE_ORDER_RECEIVED',
+      purchaseOrderId: purchaseOrderId,
+      userId: currentUser.id,
+      timestamp: new Date(),
+      details: {
+        supplierId: purchaseOrder.supplierId,
+        supplierName: purchaseOrder.supplierName,
+        itemCount: purchaseOrder.items.length,
+        totalAmount: purchaseOrder.totalAmount
+      }
+    });
+    
+    // Return updated purchase order
+    return await db.collection('purchaseOrders').findOne({ _id: ObjectId(purchaseOrderId) });
+  } catch (error) {
+>>>>>>> b2a0ea14144fee369fc3c63e1b88dc36d4afc4e1
     console.error('Error receiving purchase order:', error);
     throw error;
   }
