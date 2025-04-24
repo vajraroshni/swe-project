@@ -1,9 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { createSupplier, getAllSuppliers, getSupplierById } = require('../controllers/supplierController');
+const {
+  getAllInventory,
+  getInventoryById,
+  updateStock,
+  checkInventoryLevels
+} = require('../controllers/inventoryController');
 
-router.post('/', createSupplier);
-router.get('/', getAllSuppliers);
-router.get('/:id', getSupplierById);
+router.get('/', getAllInventory);
+router.get('/:id', getInventoryById);
+router.post('/update-stock', updateStock);
+router.post('/check-levels', checkInventoryLevels);
 
 module.exports = router;
